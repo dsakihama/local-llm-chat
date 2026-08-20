@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ollama Chat</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <header id="header">
+      <div class="brand">
+        <div class="brand-mark">O</div>
+        <div>
+          <div class="brand-title">Ollama Chat</div>
+          <div class="brand-sub">Local · localhost:11434</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <!-- model pill wraps a native select for accessibility -->
+        <div class="pill-wrap">
+          <button class="pill" id="model-pill" title="Switch model">
+            <span class="pill-dot"></span>
+            <span class="pill-name" id="pill-name">Loading…</span>
+            <span class="pill-size" id="pill-size"></span>
+            <span class="pill-caret">▾</span>
+          </button>
+          <select id="model-select" aria-label="Select model"></select>
+        </div>
+        <button class="icon-btn" id="copy-btn" title="Copy last response">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="11" height="11" rx="2"/>
+            <path d="M5 15V5a2 2 0 0 1 2-2h10"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="clear-btn" title="Clear history">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="stream">
+      <div id="stream-inner">
+        <!-- messages rendered here -->
+      </div>
+
+      <!-- status indicator (shown while loading) -->
+      <div id="status-wrap" hidden>
+        <div class="status-box">
+          <span class="status-dot"></span>
+          <span id="status-text">Thinking…</span>
+        </div>
+      </div>
+    </main>
+
+    <footer id="composer">
+      <div class="composer-inner">
+        <div class="input-box">
+          <textarea
+            id="user-input"
+            placeholder="Message Ollama…"
+            rows="1"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+          <div class="composer-row">
+            <div class="composer-left"><!-- reserved for future toolbar items --></div>
+            <button class="send-btn" id="send-btn">
+              Send
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="hint-row">
+          <span>Press ⌘⏎ to send · ⇧⏎ for newline</span>
+          <span>Switching models starts a new chat</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- flash toast -->
+  <div id="flash" hidden>
+    <span class="flash-dot"></span>
+    <span id="flash-text"></span>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

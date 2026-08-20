@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Local Ollama Chat — Clean Utility</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  html, body, #root { height: 100%; }
+  body { margin: 0; background: #f0eee9; }
+
+  /* Token highlighting palette used inside code blocks */
+  .tk-keyword { color: #ff7b72; }
+  .tk-string  { color: #a5d6ff; }
+  .tk-comment { color: #6e7681; font-style: italic; }
+  .tk-number  { color: #f7c873; }
+  .tk-builtin { color: #d2a8ff; }
+  .tk-func    { color: #d2a8ff; }
+  .tk-text    { color: inherit; }
+
+  @keyframes clean-pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  *::-webkit-scrollbar { width: 0; height: 0; }
+  * { scrollbar-width: none; }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="app/shared.jsx"></script>
+<script type="text/babel" src="app/clean.jsx"></script>
+<script type="text/babel" src="app/clean-states.jsx"></script>
+<script type="text/babel" src="app/errors.jsx"></script>
+<script type="text/babel" src="app/tweakable.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+function App() {
+  return (
+    <DesignCanvas
+      title="Local Ollama Chat · Clean Utility"
+      subtitle="Committed direction. Below: the canonical states the PRD calls for, plus error patterns."
+    >
+      <DCSection
+        id="main"
+        title="Active chat"
+        subtitle="The default screen — mixed text + code response. Try the input, copy/download, model pill."
+      >
+        <DCArtboard id="active" label="Active conversation · tweakable" width={1240} height={820}>
+          <TweakableCleanChat />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection
+        id="states"
+        title="Other states"
+        subtitle="Empty (first load), model picker open, and clear-history confirmation."
+      >
+        <DCArtboard id="empty" label="Empty state · first load" width={1080} height={760}>
+          <CleanEmpty />
+        </DCArtboard>
+        <DCArtboard id="picker" label="Model picker · open" width={1080} height={760}>
+          <CleanPickerOpen />
+        </DCArtboard>
+        <DCArtboard id="confirm" label="Clear-history confirm" width={1080} height={760}>
+          <CleanConfirmClear />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection
+        id="errors"
+        title="Error states"
+        subtitle="The three failure modes from the PRD."
+      >
+        <DCArtboard id="errors" label="Connection · timeout · file size" width={680} height={720}>
+          <ErrorStates />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
